@@ -1,0 +1,65 @@
+@import "tailwindcss";
+@source "../index.html";
+@source "./**/*.{ts,tsx,js,jsx}";
+
+@keyframes lumina-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes lumina-slide-in-from-bottom-4 {
+  from {
+    transform: translateY(1rem);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@layer utilities {
+  .animate-in {
+    animation-duration: 300ms;
+    animation-fill-mode: both;
+    animation-timing-function: ease-out;
+  }
+
+  .fade-in {
+    animation-name: lumina-fade-in;
+  }
+
+  .slide-in-from-bottom-4 {
+    animation-name: lumina-slide-in-from-bottom-4;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+  
+  .custom-scrollbar-dark::-webkit-scrollbar {
+    width: 6px;
+  }
+  .custom-scrollbar-dark::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-scrollbar-dark::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+  }
+  .custom-scrollbar-dark::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.3);
+  }
+}
