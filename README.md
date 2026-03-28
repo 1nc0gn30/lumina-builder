@@ -1,70 +1,126 @@
 # Lumina Builder
 
-Lumina Builder is a high-end website builder for assembling modern pages from reusable blocks, previewing layouts on multiple device sizes, and exporting production-ready code.
+Lumina Builder is a visual page builder that lets you:
 
-## Production Domain
+- add and customize prebuilt website blocks
+- manage multiple pages in one workspace
+- preview layouts in desktop/tablet/mobile frames
+- configure per-page SEO and optional Supabase auth
+- export a full React + Tailwind page as code
 
-- Primary app URL: `https://lumina.757tech.pro/`
-- Open Graph image source: `https://757tech.pro/og.png`
+## Requirements
 
-`index.html` is configured with canonical, robots, Open Graph, Twitter Card, and JSON-LD metadata for SEO and social sharing.
-
-## Features
-
-- Drag-and-arrange style page composition from a block registry
-- Mobile, tablet, and desktop preview modes
-- Per-page SEO fields (title, description, keywords, image, slug, noindex)
-- Client-side persistence for pages and settings
-- Export-friendly front-end architecture
-
-## Tech Stack
-
-- React 19 + TypeScript
-- Vite 6
-- Tailwind CSS 4
-- Motion (animations)
-
-## Local Development
-
-Prerequisites:
-
-- Node.js 20+ (recommended)
+- Node.js 20+
 - npm
 
-Setup:
+## Run the Builder Locally
 
 1. Install dependencies:
    `npm install`
-2. Create env file:
-   `cp .env.example .env.local`
-3. Add required variables (for example `GEMINI_API_KEY`) in `.env.local`
-4. Start the app:
+2. Start dev server:
    `npm run dev`
-5. Open:
+3. Open:
    `http://localhost:3000`
 
-## Scripts
+## How to Use the Builder
 
-- `npm run dev` - start local dev server on port `3000`
-- `npm run build` - create production build in `dist/`
-- `npm run preview` - preview the production build locally
-- `npm run lint` - run TypeScript type checks
-- `npm run clean` - remove the `dist/` folder
+### 1) Add blocks to the canvas
 
-## Deployment
+1. Use the left sidebar categories.
+2. Click a block name to add it to the current page.
+3. Click a placed block on canvas to select it.
+
+### 2) Edit block content and settings
+
+1. Select a block on canvas.
+2. Use the right-side `Properties` panel.
+3. Update text, images, colors, booleans, and selects based on that block's schema.
+
+### 3) Reorder or remove blocks
+
+1. Hover a block on canvas.
+2. Use:
+   - up/down arrows to move
+   - trash icon to delete
+
+### 4) Manage pages
+
+Open the topbar page dropdown (current page name).
+
+- `+` adds a new page.
+- Pencil renames a page.
+- Shield toggles page auth requirement.
+- Magnifier opens SEO settings for that page.
+- Trash deletes the page (only shown when more than one page exists).
+
+### 5) Configure SEO per page
+
+Click `SEO` in the topbar (or magnifier in the page menu).
+
+Fields:
+
+- page name
+- SEO title
+- SEO description
+- keywords
+- slug (auto-sanitized)
+- Open Graph image URL
+- `noindex` toggle
+
+These values are injected into exported code via runtime meta tag updates.
+
+### 6) Configure auth (optional, per page)
+
+1. Mark a page as protected with the Shield toggle in the page menu.
+2. Click `Auth Config` in the topbar.
+3. Set:
+   - Supabase URL
+   - Supabase anon key (`anon` key only, never `service_role`)
+
+When exported, protected pages include Supabase session checks and sign-in/sign-up UI.
+
+### 7) Export code
+
+1. Click `Export Code` (enabled when the page has at least one block).
+2. Click `Copy Code`.
+3. Paste into your target React project (for example `GeneratedPage.tsx`).
+
+Export output includes:
+
+- React component code for all selected blocks
+- required imports (including `lucide-react` icons used by blocks)
+- SEO helper logic
+- optional Supabase auth wrapper when the page is protected
+
+### 8) Quick generation and reset actions
+
+- `Lucky Dip` creates 1-4 random pages with random blocks.
+- Trash icon in topbar clears all blocks on the current page.
+
+## Local Data Storage
+
+Builder state is stored in browser `localStorage`:
+
+- `lumina-pages`
+- `lumina-supabase-url`
+- `lumina-supabase-anon-key`
+- `lumina-preview-auth-session`
+
+This means data is per-browser and per-device unless exported manually.
+
+## NPM Scripts
+
+- `npm run dev` - run Vite dev server on port `3000`
+- `npm run build` - production build to `dist/`
+- `npm run preview` - preview production build
+- `npm run lint` - TypeScript type-check only (`tsc --noEmit`)
+- `npm run clean` - remove `dist/`
+
+## Deploy This App
 
 1. Build:
    `npm run build`
-2. Deploy contents of `dist/` to your host/CDN.
-3. Point DNS for `lumina.757tech.pro` to your deployment target.
-4. Ensure HTTPS is enabled and redirects are configured to keep `https://lumina.757tech.pro/` canonical.
-
-## SEO Notes
-
-- Base SEO metadata lives in `index.html`.
-- Page-level SEO values are handled in the app state and exported output.
-- If the OG image path changes, update:
-  - `meta[property="og:image"]`
-  - `meta[name="twitter:image"]`
-  in `index.html`.
-# Lumina-Builder
+2. Deploy the `dist/` folder to your host.
+3. Point your domain or subdomain to that deployment.
+4. Ensure HTTPS is enabled and redirect rules are configured as needed.
+# lumina-builder
